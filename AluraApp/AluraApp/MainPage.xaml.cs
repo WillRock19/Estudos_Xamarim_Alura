@@ -13,10 +13,10 @@ namespace AluraApp
             InitializeComponent();
             InitializeBooksCollection();
 
-            //listViewBooks.ItemsSource = Books;
+            listViewBooks.ItemsSource = Books;
             Books.Add(new Book("Batman: Terra um 3", "Geoff Johns", 55M));
 
-            BindingContext = this;
+            //BindingContext = this;
         }
 
         private void InitializeBooksCollection()

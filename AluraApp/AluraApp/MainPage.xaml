@@ -9,7 +9,11 @@
             <DataTemplate>
                 <ViewCell>
                     <ViewCell.View>
-                        <Label Text="{Binding Name}"></Label>
+                        <StackLayout Orientation="Horizontal">
+                            <Label Text="{Binding Name}"></Label>
+                            <Label Text=" - "></Label>
+                            <Label Text="{Binding Price}"></Label>
+                        </StackLayout>
                     </ViewCell.View>
                 </ViewCell>
             </DataTemplate>
