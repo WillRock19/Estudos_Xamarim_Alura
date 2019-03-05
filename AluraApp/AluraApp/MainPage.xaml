@@ -4,15 +4,15 @@
              xmlns:local="clr-namespace:AluraApp"
              x:Class="AluraApp.MainPage">
 
-    <ListView x:Name="listViewBooks" ItemsSource="{Binding Books}">
+    <ListView x:Name="listViewBooks" ItemsSource="{Binding Books}" Margin="25" ItemTapped="InformSelectedItem" >
         <ListView.ItemTemplate>
             <DataTemplate>
                 <ViewCell>
                     <ViewCell.View>
                         <StackLayout Orientation="Horizontal">
-                            <Label Text="{Binding Name}"></Label>
+                            <Label Text="{Binding Name}" FontSize="14"></Label>
                             <Label Text=" - "></Label>
-                            <Label Text="{Binding Price}"></Label>
+                            <Label Text="{Binding Price}" FontSize="12"></Label>
                         </StackLayout>
                     </ViewCell.View>
                 </ViewCell>

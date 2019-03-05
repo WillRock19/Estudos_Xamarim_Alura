@@ -1,5 +1,6 @@
 ﻿using AluraApp.Domain;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using Xamarin.Forms;
 
 namespace AluraApp
@@ -28,6 +29,12 @@ namespace AluraApp
                 new Book("Demolidor: revelado", "Ed brubaker", 70.90M),
                 new Book("Batman: ano um", "Frank Miller", 45.20M)
             };
+        }
+
+        private void InformSelectedItem(object sender, ItemTappedEventArgs e)
+        {
+            var selectedBook = (Book)e.Item;
+            DisplayAlert("Item Selecionado", $"Você selecionou o livro {selectedBook.Name}, que custa {selectedBook.Price}", "Ta serto", "Endoidou?!");
         }
     }
 }
