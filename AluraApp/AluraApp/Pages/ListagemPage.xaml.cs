@@ -1,15 +1,14 @@
 ﻿using AluraApp.Domain;
 using System.Collections.Generic;
-using System.Threading.Tasks;
 using Xamarin.Forms;
 
-namespace AluraApp
+namespace AluraApp.Pages
 {
-    public partial class MainPage : ContentPage
+    public partial class ListagemPage : ContentPage
     {
         public List<Book> Books { get; set; }
 
-        public MainPage()
+        public ListagemPage()
         {
             InitializeComponent();
             InitializeBooksCollection();

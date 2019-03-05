@@ -1,4 +1,4 @@
-﻿using System;
+﻿using AluraApp.Pages;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -10,8 +10,7 @@ namespace AluraApp
         public App()
         {
             InitializeComponent();
-
-            MainPage = new MainPage();
+            MainPage = new ListagemPage();
         }
 
         protected override void OnStart()
