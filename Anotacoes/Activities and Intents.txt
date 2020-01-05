@@ -1,0 +1,158 @@
+																		XAMARIN - Activities and context
+																		
+	As activities dentro de um aplicativo costumam inicializar umas às outras - desse modo, eu inicio uma activity que, por sua vez, é responsável por chamar a próxima, que chama
+	a próxima e assim por diante.
+	
+		"The Activities in an app work together to perform tasks for the user. It is very common for one Activity to start another Activity. This is part of the normal workflow of an app."
+	
+	No Android, o SO é quem inicializa a Activity a partir de um Request que o programador realiza utilizando um Context.
+	
+	O context é enviado para o Android que, por sua vez, utiliza das propriedades ali definidas para instanciar uma Activity;
+	
+	Meu app pode dar start em Activities que existem dentro de outros apps, assim como as já definidas dentro do SO.
+	
+	
+	CONTEXT
+	
+		Context fornece um conjunto de serviços que você pode utilizar. Intuitivamente, ele pode ser considerado como "Your way to access the Android environment running your app"
+		
+		Os serviços que ele disponibiliza são:
+		
+			OS Services (serviços de SO): é o ponto de acesso para serviços do sistema, tais como "inicializar uma activity", "acessar conecções de rede", "exibir notificações", "determinar localizações de GPS", etc.
+			
+			Informações sobre seu app: Ele fornece o "nome do processo", a "descrição do app", "tema default", informações sobre o SDK mínimo suportado, etc.
+			
+			Resources and assets: o context também fornece acesso à todos os recursos e assets dentro do apk do aplicativo.
+			
+				Resources: arquivos que não são código, como, por exemplo, imagens, layouts e strings;
+				
+				Assets: também são arquivos "não-código", mas o conteúdo deles depende do programador. São como RAW Files, e o Android não faz ideia do seu significado. Dessa forma, você pode acessá-las
+				apenas no modo "low-level".
+			
+			Runtime file System: também são disponibilizadas as localizações dos arquivos de sistema. Por exemplo: installed package, o lugar em que ficam arquivos temporariamente cacheados e a localização do banco de dados;
+		
+	INTENT
+	
+		Um intent é um request que se realiza para o SO, visando iniciar uma nova Activity. 
+		
+		Cria-se o Intent, faz um load nele dos dados da Activity que se quer iniciar, e então o enviamos para o SO.
+		
+		
+		EXPLICIT INTENT
+			
+			É um Intent que identifica exatamente qual a Activity que queremos inicializar. Geralmente são utilizados para iniciar uma Activity definida dentro do próprio apk do nosso app.
+			
+				"The defining characteristic of an Explicit Intent is that it must exactly (i.e. explicitly) identify the target Activity. 
+				 Explicit Intents are generally used to start an Activity that is defined inside your .apk. 
+				 Technically, they can also be used to start an Activity from a different .apk as long as you know the package name and class name. 
+				 This is generally rare. Most of the time it is reasonable to think of an Explicit Intent as how you launch an Activity defined in your own .apk."
+			
+			
+				"To launch an Activity using an Explicit Intent, you first create the Intent and load it with the Type object that identifies the target. 
+				 Then you pass the Intent to StartActivity."
+				 
+			
+		IMPLICIT INTENT
+			
+			É um Intent que descreve a operação que precisa ser feita e deixa o Android definir qual a Activity que precisa ser executada.
+			
+				Se houver mais de uma Activity para aquela tarefa, o Android exibe um picker para que o usuário escolha a desejada
+				
+			Ela contém várias coisas que ajudam a descrever o que precisamos que seja feito:
+			
+				Action: No alto nível, é aquilo que queremos fazer;
+				
+				Data: São os dados que serão passados para a Activity, como um número de telefone ou endereço de e-mail;
+				
+				MIME Type: tipo de informação em que a Activity vai operar, que ajuda o Android a decidir qual Activity lançar;
+				
+				Categories: Podem ser uma descrição de alto nível do estilo de Activity que desejamos;
+				
+				Extras: mais detalhes sobre o que queremos que a Activity alvo faça, ou então mais dados em que ela pode operar;
+			
+			Não são necessários usar todos eles; geralmente, Action e Data já são o suficiente. Na documentação do Android temos as informações de quais destes ítens precisamos passar
+			para cada Activity específica. 
+			
+				"Implicit Intents are error prone. You cannot know ahead of time if the user's device will have an Activity installed that can service your request."
+	
+	
+	NAVIGATION AND THE BACK-BUTTON
+	
+		Android apps usam vários patterns de navigation, sendo eles:
+		
+			Stack navigation: usado para navegação padrão de avançar e retornar para alguma tela;
+			
+			Tab Navigation: usado quando temos algumas poucas interfaces de usuário para trocar e o conteúdo entre elas é relacionado (ou seja, vários ítens em uma mesma Activity).
+			É o mesmo padrão de um navegador Web quando damos tab e o "foco" do app vai indo de item em item dentro do layout do brownser;
+			
+			Drawer: é uma boa quando vamos criar menus de navegação (por exemplo, menus laterais dentro do aplicativo). Eles tomam mínimo espaço na tela porque você pode colapsa-los, 
+			mas oferecem uma interface robusta quando necessário. Podem lidar com cenários mais complexos de navegação do que os stacks, por exemplo.
+			
+		Back-Stack: 
+		
+			É um registro histórico das Activities de um usuário. Android vai salvando as Activity que o usuário na pilha, e então os limpa conforme o usuário vai clicando no 
+			botão de back.
+			
+				"There are a few reasons why this navigation mechanism is built-in to Android. First, it's useful and relatively simple for developers yet powerful enough for the needs of many apps. 
+				Second, it's familiar. Users already understand the pattern since the concept of go back appears in web browsers and file-system navigators like Finder and File Explorer."
+			
+			Se o usuário navegar por múltiplos apps, as Activity desses vários apps podem coexistir na pilha de Back ao mesmo tempo (exemplo: ver os detalhes de um contato para usá-los para escrever um e-mail);
+			
+				"The Activities in the back-stack are not restricted to a single app. If an app allows the user to navigate to Activities defined in other apps, 
+				then Activities from both apps can exist on the back-stack simultaneously."
+				
+			
+	ACTIVITY'S PROCESS
+
+		"Each app's Activities run in their own process. In this case, your app's Activities would run in your app's process and the web browser Activity would run in the browser's process."
+		
+		Os dados que eu posso passar entre as Activities são: dados do tipo simples e objetos serializados.
+		
+			"Only simple types and serialized objects can move between Activities. Object references cannot since they can't cross process boundaries."
+			
+	BUNDLE
+	
+		É um objeto de chave-valor utilizado para passar e extrair dados entre as Activities. As key precisam ser strings e os values podem variar entre valores simples e objetos serializados.
+		
+			"A Bundle is a dictionary that stores key-value pairs. The keys must be strings and values are limited to the simple types and serializable objects."
+		
+		Uma vez passados o Bundle dentro de um intent, os dados que queremos enviar ficam dentro da propriedade Extra;
+		
+		
+			"There are two ways to load Intent Extras. You can create a Bundle, fill it with data, and then load it into the Intent, but most people don't do that because there's an easier way. 
+			 The Intent class has convenience methods that automatically create a Bundle inside the Intent and load the data all in one step. This is the most common way to load Intent Extras."
+			 
+	
+	ACTIVITY's RETURN VALUE
+
+		As Activity podem retornar valores para aquelas que as chamaram. Existem três tipos de retorno possíveis:
+		
+			1. Nenhum;
+			2. Um status de "sucesso/falha";
+			3. Dados juntamente ao status de "sucesso/falha";
+			
+		Para recerber o resultado, precisamos chamar a Activity com o StartActivityForResult e criar um método de callback que executará esse Result.
+		
+			"When your source Activity needs a result back from the target Activity, you use StartActivityForResult to launch the target. This method requires you to pass a Request Code 
+			 in addition to the Intent. It also tells Android to call your source's OnActivityResult method when the target Activity finishes. One of the parameters Android passes to your 
+			 source's overload of OnActivityResult will be the same request code you sent to StartActivityForResult."
+			 
+		Request Code
+	
+			É um inteiro que passamos para uma Activity para ajudar a identificá-la. Não importa que valor você escolher. Você recebe esse valor de volta no momento em que a Activity encerra.
+				
+			   "The request code is an integer value you can pass to each target Activity you start. Android doesn't care what values you use since the values only have meaning to you. 
+				The key is to pass a different value to each Activity you start. You automatically get that same request code back when each target Activity finishes - the code lets 
+				you identify which of the targets has completed."
+		
+		Result Code
+	
+			Quando uma Activity retorna um resultado, ela trás consigo um Result Code. Esse código pode retornar os estados "OK", "Canceled" e "First User", que é uma forma de retornar um
+			código mais particular da regra de negócio, que não seja nem "Ok" e nem "Canceled" - representa o "primeiro valor" que deveria ser dado a alguém. Se quiser retornar esse código
+			customizado, garanta que esse inteiro seja maior que o "First User", para assim garantir que ele não vá entrar em conflito com nenhuma outra variável ou código interno do XAMARIN.
+		
+		Bundle
+		
+			Uma Activity também pode retornar um Bundle com dados dentro de uma Intent. 
+	
+	
